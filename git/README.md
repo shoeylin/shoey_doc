@@ -1,7 +1,3 @@
-# Shoey學習筆記
-
-此紀錄一些零散的學習過程，希望未來回頭可以查找到相關指令或學過遺忘的東西
-
 ## github
 
 ### 解决 github push failed (remote: Permission to userA/repo.git denied to userB.)
