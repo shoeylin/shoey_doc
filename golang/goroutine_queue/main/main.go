@@ -1,0 +1,58 @@
+package main
+
+import (
+	"fmt"
+)
+
+type node struct {
+	value interface{}
+	prev  *node
+	next  *node
+}
+type LinkedQueue struct {
+	head *node
+	tail *node
+	size int
+}
+
+func (queue *LinkedQueue) Size() int {
+	return queue.size
+}
+
+func (queue *LinkedQueue) Peek() interface{} {
+	if queue.head == nil {
+		fmt.Println("use Peek Empty queue.")
+		return nil
+	}
+	return queue.head.value
+}
+
+func (queue *LinkedQueue) Add(value interface{}) {
+	new_node := &node{value, queue.tail, nil}
+	if queue.tail == nil {
+		queue.head = new_node
+		queue.tail = new_node
+	} else {
+		queue.tail.next = new_node
+		queue.tail = new_node
+	}
+	queue.size++
+	new_node = nil
+}
+
+func (queue *LinkedQueue) Remove() {
+	if queue.head == nil {
+		fmt.Println("use Reomove Empty queue.")
+		return
+	}
+	first_node := queue.head
+	queue.head = first_node.next
+	first_node.next = nil
+	first_node.value = nil
+	queue.size--
+	first_node = nil
+}
+
+func main() {
+
+}
