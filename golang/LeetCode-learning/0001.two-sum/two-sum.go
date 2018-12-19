@@ -20,15 +20,3 @@ func twoSum(nums []int, target int) []int {
 
 	return nil
 }
-
-func test(sum []int, target int) []int{
-
-	index := make(map[int]int, len(sum))
-
-	for i, b := range sum {
-		if j, ok := index[target-b]; ok {
-			return []int{j, i}
-		}
-		index[b] = i
-	}
-}
