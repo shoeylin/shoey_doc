@@ -23,7 +23,7 @@ func isMatch(s, p string) bool {
 	}
 
 	for i := 0; i < sSize; i++ {
-		for j := 0; j < sSize; j++ {
+		for j := 0; j < pSize; j++ {
 			if p[j] == '.' || p[j] == s[i] {
 				//p[j]與 s[i]可以匹配上 所以 只要前面匹配 這裡就能匹配上
 				dp[i+1][j+1] = dp[i][j]

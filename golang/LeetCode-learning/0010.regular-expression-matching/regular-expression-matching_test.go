@@ -26,11 +26,11 @@ func Test_OK(t *testing.T) {
 	qs := []question{
 		question{
 			p: para{
-				one: "aab",
-				two: "a*b*c",
+				one: "aa",
+				two: "a",
 			},
 			a: ans{
-				one: true,
+				one: false,
 			},
 		},
 		question{
