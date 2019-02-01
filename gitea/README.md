@@ -148,6 +148,11 @@ USE_COMPAT_SSH_URI：true：當使用默認SSH端口時，強制ssh：//克隆ur
 [service]
 DISABLE_REGISTRATION：true：禁用註冊，之後只有管理員可以為用戶創建帳戶。
 REQUIRE_SIGNIN_VIEW：true：啟用此選項以強制用戶登錄以查看任何頁面。
+
+[openid]
+ENABLE_OPENID_SIGNIN：false：允許通過OpenID進行身份驗證。
+ENABLE_OPENID_SIGNUP：false！DISABLE_REGISTRATION：允許通過OpenID註冊。
+
 參考配置
 https://docs.gitea.io/zh-tw/config-cheat-sheet/
 
