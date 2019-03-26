@@ -100,3 +100,70 @@ https://github.com/mobz/elasticsearch-head
 
 git clone git://github.com/mobz/elasticsearch-head.git
 
+### 安裝elasticSearch-head
+
+裝好elasticsearch後
+
+下載
+git clone git://github.com/mobz/elasticsearch-head.git
+
+cd elasticserach-head
+
+安装 grunt-cli
+
+npm install -g grunt-cli
+
+安装 grunt
+
+npm install -g grunt --save-dev
+
+
+設定grunt軟連接
+
+sudo ln -s /opt/node/bin/grunt /usr/local/bin/grunt
+
+
+修改启动文件
+Gruntfile.js
+
+connect: {
+    server: {
+        options: {
+            hostname: '0.0.0.0',
+            port: 9100,
+            base: '.',
+            keepalive: true
+        }
+    }
+}
+
+
+修改 Elasticsearch 配置文件 config/elasticsearch.yml
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+
+
+grunt server
+
+
+
+输出如下内容表示启动成功：
+
+Running "connect:server" (connect) task
+Waiting forever...
+Started connect web server on http://localhost:9100
+
+
+#### docker 安裝 elasticsearch-head
+
+for Elasticsearch 5.x: 
+
+docker run -p 9100:9100 mobz/elasticsearch-head:5
+
+
+參考https://github.com/mobz/elasticsearch-head
+
+
+
+
+### 安裝Bigdesk

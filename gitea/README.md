@@ -34,6 +34,8 @@ rpm -e --nodeps mysql　　// 强力删除模式
 可以去http://repo.mysql.com/看一下版本
 
 wget http://repo.mysql.com/mysql80-community-release-fc29.rpm
+https://link.juejin.im/?target=http%3A%2F%2Fdev.mysql.com%2Fget%2Fmysql-community-release-el7-5.noarch.rpm
+
 rpm -ivh mysql80-community-release-fc29.rpm
 yum update
 yum install mysql-server
@@ -69,6 +71,7 @@ systemctl start mariadb  #啟動MariaDB
 systemctl stop mariadb  #停止MariaDB
 systemctl restart mariadb  #重啟MariaDB
 systemctl enable mariadb  #設置開機啟動
+systemctl status  mariadb #檢查服務運行狀態
 
 ###驗證mysql
 mysqladmin --version
@@ -78,6 +81,9 @@ mysql -uroot mysql -p
 
 ###建立一個資料庫
 create database giteadb;
+
+###更改使用者密碼
+UPDATE mysql.user SET password=PASSWORD("your_new_password") WHERE user="root";
 
 ###新增一個使用者帳號
 create user 'testuser'@'localhost' identified by 'password';
@@ -91,6 +97,8 @@ grant all on testdb.* to 'testuser'@'localhost';
 ex:
 grant all on giteadb.* to 'gitea'@'%';
 
+mariadb查詢帳號全縣
+show grants for gitea@'%'; 
 
 ##安裝git 
 
