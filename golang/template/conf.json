@@ -1,0 +1,6 @@
+{
+  "DBConnAry":
+  ["root:1qaz@WSX@tcp(127.0.0.1:3306)/apex?tls=skip-verify&autocommit=true"]
+}
+
+
