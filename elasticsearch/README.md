@@ -4,9 +4,9 @@
 java -version 檢查版本 太舊移除
 
 去官網下載java
-cp jdk-8u201-linux-x64.tar.gz /usr/java/
-cd /usr/java/
-tar zxvf jdk-8u201-linux-x64.tar.gz
+    cp jdk-8u201-linux-x64.tar.gz /usr/java/
+    cd /usr/java/
+    tar zxvf jdk-8u201-linux-x64.tar.gz
 
 ## 安裝elasticsearch
 
@@ -55,113 +55,120 @@ https://www.itread01.com/content/1501938140.html
 
 #### 如果外面還是連不到可能是防火牆沒開
 CentOS7開通防火牆9200port
-查詢
-firewall-cmd --zone=public --list-all
-對外開放3000port
-firewall-cmd --zone=public --add-port=9200/tcp --permanent
-重新讀取設定黨
-firewall-cmd --reload
-再次查詢
-firewall-cmd --zone=public --list-all
-通了
+
+    查詢
+    firewall-cmd --zone=public --list-all
+    對外開放3000port
+    firewall-cmd --zone=public --add-port=9200/tcp --permanent
+    重新讀取設定黨
+    firewall-cmd --reload
+    再次查詢
+    firewall-cmd --zone=public --list-all
+    通了
 
 ### 問題四  如果還是不行 再改
 [1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
-更換root帳號 sysctl -w vm.max_map_count=262144
+更換root帳號 
+
+    sysctl -w vm.max_map_count=262144
 
 持久性的做法是在 /etc/sysctl.conf 文件中修改 vm.max_map_count 參數
-echo "vm.max_map_count=262144" > /etc/sysctl.conf
-sysctl -p
+
+    echo "vm.max_map_count=262144" > /etc/sysctl.conf
+    sysctl -p
 
 現在執行應該可以了
-./bin/elasticsear -d 
+
+    ./bin/elasticsear -d 
 
 以上教學參考
 https://www.jianshu.com/p/04f4d7b4a1d3
 
 
 ### 用docker安裝
-docker run -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.5.4
+    docker run -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.5.4
 
 
 ## 路徑說明
-/bin        運行elasticsearch 實例和管理插件的一些腳本
-/config     配置文件路徑 包含elasticsearch.yml
-/data       在節點上每個索引/碎片的數據文件的位置 可以有多個目錄
-/lib        elasticsearch使用的庫
-/logs       日誌文件夾
-/pulgings   已經安裝的插件的存放位置
+    /bin        運行elasticsearch 實例和管理插件的一些腳本
+    /config     配置文件路徑 包含elasticsearch.yml
+    /data       在節點上每個索引/碎片的數據文件的位置 可以有多個目錄
+    /lib        elasticsearch使用的庫
+    /logs       日誌文件夾
+    /pulgings   已經安裝的插件的存放位置
 
 
-##插件介紹
-head 集群管理工具
-可視化插件
-https://github.com/mobz/elasticsearch-head
+## 插件介紹
+    head 集群管理工具
+    可視化插件
+    https://github.com/mobz/elasticsearch-head
 
-git clone git://github.com/mobz/elasticsearch-head.git
+    git clone git://github.com/mobz/elasticsearch-head.git
 
 ### 安裝elasticSearch-head
 
 裝好elasticsearch後
 
 下載
-git clone git://github.com/mobz/elasticsearch-head.git
 
-cd elasticserach-head
+    git clone git://github.com/mobz/elasticsearch-head.git
+
+    cd elasticserach-head
 
 安装 grunt-cli
 
-npm install -g grunt-cli
+    npm install -g grunt-cli
 
 安装 grunt
 
-npm install -g grunt --save-dev
+    npm install -g grunt --save-dev
 
 
 設定grunt軟連接
 
-sudo ln -s /opt/node/bin/grunt /usr/local/bin/grunt
+    sudo ln -s /opt/node/bin/grunt /usr/local/bin/grunt
 
 
 修改启动文件
-Gruntfile.js
+    Gruntfile.js
 
-connect: {
-    server: {
-        options: {
-            hostname: '0.0.0.0',
-            port: 9100,
-            base: '.',
-            keepalive: true
+    connect: {
+        server: {
+            options: {
+                hostname: '0.0.0.0',
+                port: 9100,
+                base: '.',
+                keepalive: true
+            }
         }
     }
-}
 
 
 修改 Elasticsearch 配置文件 config/elasticsearch.yml
-http.cors.enabled: true
-http.cors.allow-origin: "*"
+
+    http.cors.enabled: true
+    http.cors.allow-origin: "*"
 
 
-grunt server
+    grunt server
 
 
 
 输出如下内容表示启动成功：
 
-Running "connect:server" (connect) task
-Waiting forever...
-Started connect web server on http://localhost:9100
+    Running "connect:server" (connect) task
+    Waiting forever...
+    Started connect web server on http://localhost:9100
 
 
 #### docker 安裝 elasticsearch-head
 
-for Elasticsearch 5.x: 
+    for Elasticsearch 5.x: 
 
-docker run -p 9100:9100 mobz/elasticsearch-head:5
+    docker run -p 9100:9100 mobz/elasticsearch-head:5
 
 
-參考https://github.com/mobz/elasticsearch-head
+參考 https://github.com/mobz/elasticsearch-head
 
 
 
