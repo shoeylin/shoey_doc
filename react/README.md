@@ -103,3 +103,50 @@ https://www.npmjs.com/package/npm
 
 create-react-app 專案名稱
 
+
+
+# 套件管理工具
+
+    nodejs npm
+    yarn
+    npm v5
+
+    npm install --global yarn
+
+## 比較 [install packages]
+
+    npm install
+    npm i
+
+    yarn 
+
+## add package
+    npm install --save react
+    npm i -S react
+
+    yarn add react
+
+## add dev package
+    npm i -D react
+
+    yarn add -D react
+
+## remove package
+    npm remove --save react
+    npm r -S react
+
+    yarn remove react
+
+## add global package
+
+    npm install --global nodemon
+    npm i -g nodemon
+
+    yarn global add nodemon
+
+## run script
+    npm run build
+    yarn run build
+
+    yarn build
+
