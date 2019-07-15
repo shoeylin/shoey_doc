@@ -391,3 +391,128 @@
     }
 
     export default Child;
+
+# state 組成 className 技巧
+
+    import React, { Component } from "react";
+    import eunha from "./eunha.png";
+    import "./style.css";
+
+    class Demo extends Component {
+    state = {
+        visible: true
+    };
+    toggle = () => {
+        this.setState({
+        visible: !this.state.visible
+        });
+    };
+    render() {
+        const { visible } = this.state;
+
+        return (
+        <div>
+            <button onClick={this.toggle}>Toggle</button>
+            <hr />
+            <img className={`image ${visible ? "" : "hide"}`} src={eunha} />
+        </div>
+        );
+    }
+    }
+
+    export default Demo;
+
+## style.css
+
+    .image {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+
+# 三種 Component
+
+    //ProgressBar.js
+    import React, { Component, PureComponent } from "react";
+
+    // Class Component
+    class ProgressBar extends Component {
+    render() {
+        const { value } = this.props;
+        console.count("reder");
+        return (
+        <div className="bar-outer">
+            <div className="bar-inner" style={{ width: `${value}%` }} />
+            <span>{value}%</span>
+        </div>
+        );
+    }
+    }
+
+    // PureComponent
+    class ProgressBar extends PureComponent {
+    render() {
+        const { value } = this.props;
+        console.count("reder");
+        return (
+        <div className="bar-outer">
+            <div className="bar-inner" style={{ width: `${value}%` }} />
+            <span>{value}%</span>
+        </div>
+        );
+    }
+    }
+
+    // StateLess Functional Component
+    const ProgressBar = props => {
+    const { value } = props;
+    console.count("reder");
+    return (
+        <div className="bar-outer">
+        <div className="bar-inner" style={{ width: `${value}%` }} />
+        <span>{value}%</span>
+        </div>
+    );
+    };
+
+    export default ProgressBar;
+
+## shallow compare
+
+    //ProgressBar.js
+
+    import React, { Component, PureComponent } from "react";
+    import ProgressBar from "./ProgressBar";
+
+    // shallow compare
+    class Progress extends PureComponent {
+    state = {
+        value: 0,
+        name: "",
+        info: {
+        x: 1
+        }
+    };
+    add = () => {
+        const { info } = this.state;
+        info.x += 1;
+        this.setState({
+        //   value: 0 //this.state.value + 1
+        info: info
+        });
+    };
+    render() {
+        const { value } = this.state;
+        console.count("Progress render");
+        return (
+        <div>
+            <ProgressBar value={value} />
+            <button onClick={this.add}>+</button>
+        </div>
+        );
+    }
+    }
+
+    export default Progress;
