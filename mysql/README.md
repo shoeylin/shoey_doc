@@ -131,8 +131,9 @@ rpm -e --nodeps mysql 　　// 强力删除模式
     [mysqld]
     #GTID:
     server-id=129
-    auto-increment-increment=2
-    auto-increment-offset=1
+     # 防止主键重复
+    auto-increment-increment=2 #自增id一次+2
+    auto-increment-offset=1 #設定單數
 
     #binlog
     log_bin=/var/log/mysql/mysql-bin.log
@@ -144,14 +145,31 @@ rpm -e --nodeps mysql 　　// 强力删除模式
     [mysqld]
     #GTID:
     server-id=131
-    auto-increment-increment=2
-    auto-increment-offset=2
+    # 防止主键重复
+    auto-increment-increment=2 #自增id一次+2
+    auto-increment-offset=2 #設定雙數
 
-    #binlog
+    # binlog
     log_bin=/var/log/mysql/mysql-bin.log
     relay_log=/var/log/mysql/mysql-relay-bin.log
 
-    #read_only=1 只讀
+    # read_only=1 只讀
+
+    #其他参数：binlog_do_db 参数是复制指定的数据库。如果需要，可以这样设置：
+
+
+    # 允许从复制的哪一个库
+    binlog-do-db=testdb 
+
+    binlog_do_db=db1
+    binlog_do_db=db2
+    binlog_do_db=db3
+
+    # 允许复制主服务的库
+    replicate-do-db=testdb 
+
+    # 允许复制主服务的表
+    replicate-do-table=testdb.user 
 
 ## 建立 log 位置(主庫從庫)
 
@@ -213,7 +231,7 @@ rpm -e --nodeps mysql 　　// 强力删除模式
 
     show binary logs;
 
-# show slave status\G 錯誤 Table 'mysql.gtid_slave_pos' doesn't exist，
+# show slave status\G 錯誤 Table 'mysql.gtid_slave_pos' doesn't exist
 
     至mysql 新增一個
 
@@ -229,3 +247,40 @@ rpm -e --nodeps mysql 　　// 强力删除模式
 
     stop slave;
     start slave;
+
+##  show slave status\G 錯誤 問題二 Last_Error: Query caused different errors on master and slave
+
+    Last_Error: Query caused different errors on master and slave. Error on master: ‘Deadlock found when trying to get lock; try restarting transaction‘ (1213), Error on slave: ‘Duplicate entry ‘176484282‘ for key 1‘ (1062). Default database: ‘XXXXX‘. Query: 　　‘INSERT INTO t1(id,cust_id,in_ucid,confrim_time) 
+
+    【解決辦法】 
+    　　1.確保更新語句中與從庫一致 
+    　　　　stop slave; 
+    　　　　set global sql_slave_skip_counter=1; 
+    　　　　start slave; 
+    　　2.若不一致，則從庫刪掉相應數據，重新執行event。
+
+    　　　　my.cnf 設置，一直後在修改 
+    　　　　slave-skip-errors = 1062(用於修復主從)
+
+# mysql table utf-8 編碼問題
+
+    mysql編碼問題Incorrect string value: '\xE7\xA8\x8B\xE5\xBA\x8F...' for column '******' at row 1
+
+    解決:
+
+    該問題原因是因為你數據庫的編碼不是utf-8，然後你在建表的時候也沒有指定表的默認編碼為utf-8
+
+    解決方法1：若是通過操作對象保存數據，保存時拋出異常
+
+    1.刪掉該表，加上 ENGINE=InnoDB DEFAULT CHARSET=utf8 這句話，例如：
+
+    CREATE TABLE IF NOT EXISTS `dbname`.`User` (
+    `userID` VARCHAR(100) NOT NULL,
+    `password` VARCHAR(100) NOT NULL,
+    `name` NVARCHAR(100) NULL,
+    `description` NVARCHAR(300) NULL,
+    `enabled` TINYINT NULL DEFAULT 1,
+    PRIMARY KEY (`userID`))
+    ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
+    就OK拉
