@@ -284,3 +284,22 @@ rpm -e --nodeps mysql 　　// 强力删除模式
     ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
     就OK拉
+
+# mysql connection 
+
+    mysql> show status like 'Connections';
+    +---------------+-------+
+    | Variable_name | Value |
+    +---------------+-------+
+    | Connections   | 32216 |
+    +---------------+-------+
+    1 row in set (0.00 sec)
+
+    mysql> show global variables like 'max%connections';
+    +----------------------+-------+
+    | Variable_name        | Value |
+    +----------------------+-------+
+    | max_connections      | 2000  |
+    | max_user_connections | 600   |
+    +----------------------+-------+
+    2 rows in set (0.00 sec)
