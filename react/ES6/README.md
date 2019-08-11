@@ -1,3 +1,235 @@
+# 箭頭函數
+
+~~~js
+let list = [10,20,30];
+
+//es5
+let newlist = list.map(funciton(value, index){
+    return value * value;
+});
+console.log(newlist)
+
+//es6
+newlist = list.map((value, index)=>{
+    return value * value
+})
+console.log(newlist)
+
+newlist = list.map(value =>{
+    return value * value
+})
+console.log(newlist)
+
+~~~
+
+# ES6 class
+
+~~~js
+class Player{
+    constructor(name, sex){
+        this.name = name;
+        this.sex = sex;
+    }
+    show(){
+        console.log(`${this.name}的性別是${this.sex}`);
+    }
+    static info(){
+        console.log("這是一個球員");
+    }
+}
+
+let player =new Player("褲","男");
+console.log(player.name, player.sex)
+player.show();
+
+Player.info();
+~~~
+
+# setter/getter
+
+~~~js
+class Player{
+    constructor(name, sex){
+        this.name = name;
+        this.sex = sex;
+    }
+
+    get age(){
+        return this._age;
+    }
+    set age(val){
+        this._age = val;
+    }
+}
+
+let player =new Player("褲裡","男")
+player.age =28
+console.log(player)
+console.log(player.age)
+
+~~~
+
+# 類繼承
+
+~~~js
+class Car {
+    constructor(brand) {
+        this.brand = brand
+    }
+    show() {
+        console.log(`本台${this.brand}`)
+    }
+}
+
+class Lexus extends Car {
+    constructor(brand, lineup) {
+        super(brand);
+        this.lineup = lineup
+    }
+    getPrice() {
+        switch (this.lineup) {
+            case "RX":
+                return 60;
+            case "NX":
+                return 40;
+            default:
+                throw new Error("未定意")
+        }
+    }
+}
+let mycar = new Lexus("Lexus", "RX")
+mycar.show();
+console.log(mycar.getPrice(),"萬")
+
+~~~
+
+# 循環對象
+
+~~~js
+let list = [10,20,30]
+let mystr = '你好阿'
+let mymap = new Map();
+mymap.set('JS', 'javascript')
+mymap.set('PL', 'perl')
+mymap.set('PY', 'python')
+
+for(let val of list){
+    console.log(val);
+}
+
+for(let val of mystr){
+    console.log(val);
+}
+for(let [key,value] of mymap){
+    console.log(key,value);
+}
+
+let it = mymap.values();
+let tmp;
+while (tmp=it.next()){
+    if (tmp.done) break;
+    // console.log(tmp.value, tmp.done)
+    console.log(tmp)
+}
+~~~
+
+# 可跌代對象
+
+~~~js
+class Player {
+    constructor(list) {
+        this.list = list
+    }
+    [Symbol.iterator]() {
+        let current = 0;
+        let that = this;
+        return {
+            next() {
+                return current < that.list.length ? { value: that.list[current++], done: false } :
+                    { done: true }
+            }
+        }
+    }
+}
+
+let player = new Player(['curry', 'haden', 'lebron']);
+for (let tmp of player) {
+    console.log('name:',tmp)
+}
+~~~
+
+# 跌代器製作
+
+~~~js
+function* myGenerator() {
+    yield '一';
+    yield '調';
+    yield '大';
+    yield '合';
+}
+
+for (let val of myGenerator()) {
+    console.log(val)
+}
+
+function* countdown(begin) {
+    while (begin > 0) {
+        yield begin--
+    }
+}
+
+for (let tmp of countdown(5)) {
+    console.log(tmp)
+}
+~~~
+
+# 跌代類yield
+
+~~~js
+class MyList {
+    constructor(lits) {
+        this.lits = lits;
+        this[Symbol.iterator] = function* () {
+            let current = 0;
+            let that = this;
+            while (current < that.lits.length) {
+                yield that.lits[current++]
+            }
+        }
+    }
+}
+
+let mylist = new MyList([100, 200, 300, 400, 500])
+for (let val of mylist) {
+    console.log(val)
+}
+~~~
+
+# 模塊化設計
+
+node --experimental-modules main.mjs
+## math.mjs
+~~~js
+function add(x, y) {
+    return x + y
+}
+
+function minus(x, y) {
+    return x - y
+}
+
+export { add, minus };
+~~~
+## main.mjs
+~~~js
+import { add, minus } from './math'
+
+console.log(add(10, 20))
+console.log(minus(30, 20))
+
+~~~
+# 類模塊
+
 # ECMAScript
 
 # 短路求值 真的假的?
