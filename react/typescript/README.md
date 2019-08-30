@@ -159,4 +159,56 @@ console.log(data[0]);
 console.log(data[3]);
 data[4]='php'
 console.log(data[4]);
+data[10] = 'Go';
+console.log(data);
+~~~
+
+# 多為數組的使用
+
+~~~js
+// let name:type[][]= [[],[],[],...];
+
+let data: number[][] = [
+  [1, 2, 3, 4, 5],
+  [10, 20, 30, 40, 50],
+  [100, 200, 300, 400, 500]
+];
+console.log(data);
+console.log(data[0]);
+console.log(data[1]);
+console.log(data[2]);
+
+console.log(data[0][0]);
+console.log(data[0][1]);
+~~~
+
+# 枚舉類型
+
+
+~~~js
+//定義方法
+// enum name {name1,name2,name3, ...}
+
+enum Sex {
+  MALE,
+  FEMALE,
+  UNKNOWN
+}
+
+let member_sex: Sex = Sex.FEMALE;
+console.log(member_sex);
+console.log(Sex[member_sex]);
+//console.log(checkSex[member_sex]);
+
+switch (member_sex) {
+  case Sex.MALE:
+    console.log("男");
+    break;
+  case Sex.FEMALE:
+    console.log("女");
+    break;
+  case Sex.UNKNOWN:
+    console.log("不明");
+    break;
+}
 ~~~
