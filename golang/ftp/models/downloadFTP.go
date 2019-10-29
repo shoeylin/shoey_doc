@@ -29,16 +29,16 @@ func NewDownloadFtp(pars *FtpConnPars) {
 	}
 
 	ftpClient := ftp4go.NewFTP(logl)
-	defer ftpClient.Quit()
-
+	
 	ftpClient.SetPassive(true)
 	// ftpClient.Connect(pars.ftpAddress, pars.ftpPort, "")
-
+	
 	// connect
 	_, err := ftpClient.Connect(pars.FtpAddress, pars.FtpPort, "")
 	if err != nil {
 		fmt.Printf("The FTP connection could not be established, error: %v", err.Error())
 	}
+	defer ftpClient.Quit()
 
 	fmt.Printf("Connecting with username: %s and password %s", pars.Username, pars.Password)
 	_, err = ftpClient.Login(pars.Username, pars.Password, "")

@@ -158,18 +158,18 @@ rpm -e --nodeps mysql 　　// 强力删除模式
     #其他参数：binlog_do_db 参数是复制指定的数据库。如果需要，可以这样设置：
 
 
-    # 允许从复制的哪一个库
-    binlog-do-db=testdb 
+    # 允許從複製的哪一個庫
+    binlog-do-db=testdb
 
     binlog_do_db=db1
     binlog_do_db=db2
     binlog_do_db=db3
 
-    # 允许复制主服务的库
-    replicate-do-db=testdb 
+    # 允許複製主服務的庫
+    replicate-do-db=testdb
 
-    # 允许复制主服务的表
-    replicate-do-table=testdb.user 
+    # 允許複製主服務的表
+    replicate-do-table=testdb.user
 
 ## 建立 log 位置(主庫從庫)
 
@@ -248,18 +248,18 @@ rpm -e --nodeps mysql 　　// 强力删除模式
     stop slave;
     start slave;
 
-##  show slave status\G 錯誤 問題二 Last_Error: Query caused different errors on master and slave
+## show slave status\G 錯誤 問題二 Last_Error: Query caused different errors on master and slave
 
-    Last_Error: Query caused different errors on master and slave. Error on master: ‘Deadlock found when trying to get lock; try restarting transaction‘ (1213), Error on slave: ‘Duplicate entry ‘176484282‘ for key 1‘ (1062). Default database: ‘XXXXX‘. Query: 　　‘INSERT INTO t1(id,cust_id,in_ucid,confrim_time) 
+    Last_Error: Query caused different errors on master and slave. Error on master: ‘Deadlock found when trying to get lock; try restarting transaction‘ (1213), Error on slave: ‘Duplicate entry ‘176484282‘ for key 1‘ (1062). Default database: ‘XXXXX‘. Query: 　　‘INSERT INTO t1(id,cust_id,in_ucid,confrim_time)
 
-    【解決辦法】 
-    　　1.確保更新語句中與從庫一致 
-    　　　　stop slave; 
-    　　　　set global sql_slave_skip_counter=1; 
-    　　　　start slave; 
+    【解決辦法】
+    　　1.確保更新語句中與從庫一致
+    　　　　stop slave;
+    　　　　set global sql_slave_skip_counter=1;
+    　　　　start slave;
     　　2.若不一致，則從庫刪掉相應數據，重新執行event。
 
-    　　　　my.cnf 設置，一直後在修改 
+    　　　　my.cnf 設置，一直後在修改
     　　　　slave-skip-errors = 1062(用於修復主從)
 
 # mysql table utf-8 編碼問題
@@ -285,7 +285,7 @@ rpm -e --nodeps mysql 　　// 强力删除模式
 
     就OK拉
 
-# mysql connection 
+# mysql connection
 
     mysql> show status like 'Connections';
     +---------------+-------+

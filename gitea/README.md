@@ -199,3 +199,29 @@ https://docs.gitea.io/zh-tw/config-cheat-sheet/
     ps -ef |grep gitea
 
     kill PID
+
+# 自製憑證問題 [Git] 解決 Remote 遇到自我憑證 SSL certification problem
+
+## 在使用 Git 執行遠端的操作時，若是自我憑證架的服務，可能會遇到顯示以下的錯誤
+
+    fatal: unable to access 'https://192.168.0.1/project-dev/test.git/': SSL certificate problem: self signed certificate
+
+## 解決方法： (註: 若不想全面開放就不要下這個指令)
+
+    git config --global http.sslVerify false
+
+## 單次不驗證：
+
+    GIT_SSL_NO_VERIFY=true git clone https://192.168.0.1/project-dev/test.git
+
+    或是
+
+    git -c http.sslVerify=false clone https://192.168.0.1/project-dev/test.git
+
+## 然後進入到該 repository 下(ex: cd test), 再下一次指定, 即未來此 repository (test)不需再做驗證
+
+    cd test
+
+    git config http.sslVerify false
+
+參考: https://devmanna.blogspot.com/2018/06/git-remote-ssl-certification-problem.html
