@@ -12,6 +12,7 @@ import (
 
 type Configuration struct {
 	DBConnAry []string
+	RedisConn string
 }
 
 var Config *Configuration
