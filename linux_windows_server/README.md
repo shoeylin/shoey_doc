@@ -20,7 +20,7 @@
 
 ## run.sh 內容
 
-    cd /home/user/TheProject && ./TheProject
+    cd /home/user/TheProject/run.sh && ./run.sh
 
 ## 給予 run.sh 執行權限
 
